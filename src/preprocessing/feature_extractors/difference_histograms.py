@@ -170,8 +170,9 @@ class DifferenceHistograms:
         :param image_array: The numpy array of the image.
         :return: An array of the features extracted from the image.
         """
+        if len(image_array.shape) == 2:
+            image_array = cv2.cvtColor(image_array,cv2.COLOR_GRAY2BGR)
         image_channels = cv2.split(image_array)
-
         _, _, r_comp_image = image_channels
 
         name_list, feature_array = \
