@@ -171,9 +171,19 @@ class DifferenceHistograms:
         :return: An array of the features extracted from the image.
         """
         if len(image_array.shape) == 2:
-            image_array = cv2.cvtColor(image_array,cv2.COLOR_GRAY2BGR)
+            image_array = cv2.cvtColor(image_array, cv2.COLOR_GRAY2BGR)
+    
         image_channels = cv2.split(image_array)
-        _, _, r_comp_image = image_channels
+    
+        if len(image_channels) == 3:
+            _, _, r_comp_image = image_channels
+        elif len(image_channels) == 4:
+            _, _, r_comp_image, _ = image_channels
+        elif len(image_channels) == 1:
+            image_array = cv2.cvtColor(image_array, cv2.COLOR_GRAY2BGR)
+            _, _, r_comp_image = cv2.split(image_array)
+        else:
+            return None
 
         name_list, feature_array = \
             self.get_difference_images_for_channel(r_comp_image, self.kernel_bank)
