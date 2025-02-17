@@ -54,59 +54,59 @@ def get_multi_feature_for_single_image(image_path: str) -> tuple | None:
     return difference_hist_feature, texture_feature, color_moments_feature
 
 
-# def get_input_features(train_image_dir_path: str):
-#     """
-#     This method returns the input features for all the images in the directory path provided.
-#     :param train_image_dir_path: The path of the directory containing the images.
-#     :return: The input features for all the images in the directory path provided.
-#     """
-#     logger.info('Getting input features for all the images:')
-#     print('Getting input features for all the images...')
-#     print(f"Directory path: {train_image_dir_path}")
-#     difference_hist_features = []
-#     texture_features = []
-#     color_moments_features = []
-#     input_features = []
-#     for image_path in os.listdir(train_image_dir_path):
-#         logger.debug(f'Calculating input features for {image_path}')
-#         difference_hist_feature, texture_feature, color_moments_feature = \
-#             get_multi_feature_for_single_image(os.path.join(train_image_dir_path, image_path))
-#         logger.debug(f'Packaging the features for {image_path}')
-#         difference_hist_features.append(difference_hist_feature.flatten())
-#         texture_features.append(texture_feature.flatten())
-#         color_moments_features.append(color_moments_feature.flatten())
-
-#     logger.debug('Converting the features to numpy array.')
-#     difference_hist_features = np.array(difference_hist_features)
-#     texture_features = np.array(texture_features)
-#     color_moments_features = np.array(color_moments_features)
-#     logger.debug('Packing the features of all the images.')
-#     input_features = np.concatenate((difference_hist_features, texture_features, color_moments_features), axis=1)
-
-#     return input_features
-
-def get_input_features(image_path: str):
+def get_input_features(train_image_dir_path: str):
     """
-    This method returns the input features for a single image.
-    :param image_path: The path of the image.
-    :return: The input features for the image.
+    This method returns the input features for all the images in the directory path provided.
+    :param train_image_dir_path: The path of the directory containing the images.
+    :return: The input features for all the images in the directory path provided.
     """
-    logger.info(f'Getting input features for the image: {image_path}')
-    print(f'Getting input features for {image_path}...')
+    logger.info('Getting input features for all the images:')
+    print('Getting input features for all the images...')
+    print(f"Directory path: {train_image_dir_path}")
+    difference_hist_features = []
+    texture_features = []
+    color_moments_features = []
+    input_features = []
+    for image_path in os.listdir(train_image_dir_path):
+        logger.debug(f'Calculating input features for {image_path}')
+        difference_hist_feature, texture_feature, color_moments_feature = \
+            get_multi_feature_for_single_image(os.path.join(train_image_dir_path, image_path))
+        logger.debug(f'Packaging the features for {image_path}')
+        difference_hist_features.append(difference_hist_feature.flatten())
+        texture_features.append(texture_feature.flatten())
+        color_moments_features.append(color_moments_feature.flatten())
 
-    if not os.path.isfile(image_path):
-        logger.error(f'File not found: {image_path}')
-        raise FileNotFoundError(f'File not found: {image_path}')
-    
-    logger.debug(f'Calculating input features for {image_path}')
-    difference_hist_feature, texture_feature, color_moments_feature = get_multi_feature_for_single_image(image_path)
-    
-    logger.debug(f'Flattening the features for {image_path}')
-    difference_hist_features = difference_hist_feature.flatten()
-    texture_features = texture_feature.flatten()
-    color_moments_features = color_moments_feature.flatten()
-
-    logger.debug('Packing the features for the image.')
-    input_features = np.concatenate((difference_hist_features, texture_features, color_moments_features), axis=0)
+    logger.debug('Converting the features to numpy array.')
+    difference_hist_features = np.array(difference_hist_features)
+    texture_features = np.array(texture_features)
+    color_moments_features = np.array(color_moments_features)
+    logger.debug('Packing the features of all the images.')
+    input_features = np.concatenate((difference_hist_features, texture_features, color_moments_features), axis=1)
 
     return input_features
+
+# def get_input_features(image_path: str):
+#     """
+#     This method returns the input features for a single image.
+#     :param image_path: The path of the image.
+#     :return: The input features for the image.
+#     """
+#     logger.info(f'Getting input features for the image: {image_path}')
+#     print(f'Getting input features for {image_path}...')
+
+#     if not os.path.isfile(image_path):
+#         logger.error(f'File not found: {image_path}')
+#         raise FileNotFoundError(f'File not found: {image_path}')
+    
+#     logger.debug(f'Calculating input features for {image_path}')
+#     difference_hist_feature, texture_feature, color_moments_feature = get_multi_feature_for_single_image(image_path)
+    
+#     logger.debug(f'Flattening the features for {image_path}')
+#     difference_hist_features = difference_hist_feature.flatten()
+#     texture_features = texture_feature.flatten()
+#     color_moments_features = color_moments_feature.flatten()
+
+#     logger.debug('Packing the features for the image.')
+#     input_features = np.concatenate((difference_hist_features, texture_features, color_moments_features), axis=0)
+
+#     return input_features
